@@ -3,21 +3,24 @@ name: Deploy React App to GitHub Pages
 on:
  push:
   branches:
-  - main
+    - main
+    
 jobs:
- build:
-   runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-   steps:
-    -name: Checkout Repository
-     uses: actions/checkout
-     
-    -name: Install Dependencies
-     run: npm install
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    -name: Deploy
-     uses: JamesIves/github-pages-deploy-action@3.7.1
-     with:
-       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       BRANCH: gh-pages
-       FOLDER: build
+      - name: Install Dependencies
+        run:  |
+          npm install
+          npm run build
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: build
